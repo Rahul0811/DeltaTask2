@@ -17,9 +17,6 @@ function can()
 	{
 		c.beginPath();
 		c.fillRect(this.xc,this.yc-30,80,25);
-		c.fillStyle = "blue";
-    	c.fill();
-    	c.stroke();
 	}
 	this.update = function()
 	{
@@ -79,47 +76,53 @@ function bull()
 var bullArray = [];
 for(var i = 1; i < 21 ; i++)
 {
-	var yb = 50*i;
+	var yb = 25*i;
     bullArray.push(new bull());
 }
 
 //ROCKS
-var colorArray = ['#ffaa33','#99ffaaa','#00ff00','#4411aa','#ff1100'];
-function rock()
+function rockl()
 {
-	this.xArray = [window.innerWidth-70,50];
-	this.xr = this.xArray[Math.floor(Math.random() * this.xArray.length)] ;
-	this.yr = ((window.innerHeight)/2+60) * Math.random();
-	this.dyr = 0.1;
-	this.ddyr = 1;
-	this.dxr = 10;
-	this.color = colorArray[Math.floor(Math.random() * colorArray.length)] ;
-	this.draw = function()
+	this.xr = [50,window.innerWidth-80];
+	this.xrl = this.xr[Math.floor(Math.random()*this.xr.length)];
+	this.yrl = window.innerHeight/2*Math.random();
+	this.dxrl = 10;
+	this.dyrl = 1;
+    this.ddyrl = 0.1;
+    this.power = Math.random()*50;
+	this.draw = function() 
 	{
 		c.beginPath();
-	    c.arc(this.xr,this.yr,50,0,Math.PI*2,true);
-	    c.fillStyle = "red";
-	    c.fill();
-	    console.log("Hello");
+		c.arc(this.xrl,this.yrl,50,0,Math.PI*2,true);
 	}
 	this.update = function()
 	{
-		this.xr = this.xr + this.dxr;
-		this.yr = this.yr + this.dyr;
-		this.dyr = this.dyr + this.ddyr;
-		if ((this.yr > window.innerHeight-75)||(this.yr < 50)||(this.yr = window.innerHeight-75)||(this.yr = 50))
+		this.xrl = this.xrl + this.dxrl;
+		this.yrl = this.yrl + this.dyrl;
+		this.dyrl = this.dyrl + this.ddyrl;
+		if((this.yrl > (580)||(this.yrl < 0)))
+			this.dyrl = -this.dyrl;	
+		if ((this.xrl<50)||(this.xrl>1300)) 
 		{
-			this.dyr = -this.dyr;
-		}
-		if ((this.xr > window.innerWidth-70)||(this.xr <50)||(this.xr = window.innerWidth-70)||(this.xr = 50))
-		{
-			this.dxr = -this.dxr;
+			this.dxrl = -this.dxrl;
 		}
 		this.draw();
 	}
 }
 
-var rock = new rock();
+var rocks = [];
+for(var j = 0; j < 50 ; j++)
+{
+	rocks.push(new rockl());
+}
+
+var k = 0;
+function rock_creator()
+{
+	rocks[k].update();
+	k++;
+}
+setInterval(rock_creator,5000);
 
 function main()
 {
@@ -134,6 +137,5 @@ function main()
 		{
 			bullArray[i].update();
 		}
-	rock.update();
 }
 main();
