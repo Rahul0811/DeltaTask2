@@ -47,7 +47,7 @@ function bull()
     {
     	c.beginPath();
     	c.arc(this.xb,this.yb,5,0,Math.PI*2,true);
-		c.fillStyle = "white";
+		c.fillStyle = "red";
 		c.fill();
 		c.stroke();
     }
@@ -102,7 +102,7 @@ function rockl()
 		this.dyrl = this.dyrl + this.ddyrl;
 		if((this.yrl > (580)||(this.yrl < 0)))
 			this.dyrl = -this.dyrl;	
-		if ((this.xrl<50)||(this.xrl>1300)) 
+		if ((this.xrl<100)||(this.xrl>window.innerwidth-200)) 
 		{
 			this.dxrl = -this.dxrl;
 		}
@@ -110,19 +110,15 @@ function rockl()
 	}
 }
 
-var rocks = [];
-for(var j = 0; j < 50 ; j++)
-{
-	rocks.push(new rockl());
-}
-
 var k = 0;
+var rocks = [];
 function rock_creator()
 {
+	rocks.push(new rockl())
 	rocks[k].update();
+	console.log(k);
 	k++;
 }
-setInterval(rock_creator,5000);
 
 function main()
 {
@@ -131,11 +127,11 @@ function main()
     c.fillStyle = "blue";
     c.fill();
 	can.update();
-	c.fillStyle = "white";
     c.fill();
 	for(var i = 0; i < 20; i++)
 		{
 			bullArray[i].update();
 		}
+	rock_creator();
 }
 main();
