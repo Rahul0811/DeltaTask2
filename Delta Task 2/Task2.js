@@ -1,6 +1,6 @@
 var canvas = document.getElementById("canvas");
 
-canvas.width = window.innerWidth-30;
+canvas.width = window.innerWidth;
 canvas.height = window.innerHeight-20;
 
 var c = canvas.getContext("2d");
@@ -102,9 +102,13 @@ function rockl()
 		this.dyrl = this.dyrl + this.ddyrl;
 		if((this.yrl > (580)||(this.yrl < 0)))
 			this.dyrl = -this.dyrl;	
-		if ((this.xrl<100)||(this.xrl>window.innerwidth-200)) 
+		if (this.xrl<=40)
 		{
-			this.dxrl = -this.dxrl;
+			this.dxrl = 10;
+		}
+		if (this.xrl >= window.innerWidth-80)
+		{
+			this.dxrl = -10;
 		}
 		this.draw();
 	}
